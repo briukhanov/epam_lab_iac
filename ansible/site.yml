@@ -1,0 +1,32 @@
+---
+- hosts: localhost
+  gather_facts: yes
+  connection: local
+  become: yes
+  roles:
+    - role: web
+      when: ansible_facts['os_family'] == "Debian"
+
+
+- hosts: localhost
+  become: True
+  gather_facts: True
+  connection: local
+  roles:
+    - role: php
+      when: ansible_facts['os_family'] == "Debian"
+
+- hosts: all
+  gather_facts: yes
+  connection: local
+  become: yes
+  roles:
+    - role: wordpress
+      when: ansible_facts['os_family'] == "Debian"
+
+- hosts: all
+  connection: local
+  tasks:
+    - debug:
+        msg: Sorry this script does not support OS from {{ ansible_os_family }} family. Check log!
+      when: ansible_facts['os_family'] != "Debian"

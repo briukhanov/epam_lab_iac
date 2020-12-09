@@ -1,0 +1,10 @@
+---
+  - name: Reload Nginx
+    shell: nginx -t
+    changed_when: True
+    notify: Reload Nginx step 2
+
+  - name: Reload Nginx step 2
+    service:
+      name: nginx
+      state: reloaded

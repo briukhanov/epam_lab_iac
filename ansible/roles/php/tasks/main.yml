@@ -1,0 +1,21 @@
+---
+#
+    - name: Install Prerequisites
+      apt: name={{ item }} update_cache=yes state=latest force_apt_get=yes
+      loop: [ 'aptitude' ]
+
+    - name: Install PHP Packages
+      apt: name={{ item }} update_cache=yes state=latest
+      loop: [ 'php-fpm', 'php-mysql' ]
+
+# Sets Up PHP Index Page
+    - name: Sets Up PHP Info Page
+      template:
+        src: "index.php.j2"
+        dest: "/var/www/html/index.php"
+
+# Sets PHP Info page
+    - name: Sets Up PHP Info Page
+      template:
+        src: "info.php.j2"
+        dest: "/var/www/html/info.php"
